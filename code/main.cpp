@@ -6,16 +6,21 @@ using namespace sf;
 int main(){
     int pixelWidth = VideoMode::getDesktopMode().width / 2;
     int pixelHeight = VideoMode::getDesktopMode().height / 2;
-    VideoMode vm(pixelWith,pixelHeight);
+    VideoMode vm(pixelWidth,pixelHeight);
     RenderWindow window(vm, "Mandelbrot Set", Style::Default);
     
     ComplexPlane mandelbrotSet(pixelWidth, pixelHeight);
     sf::Font font;
     sf::Text text;
-    if(!font.loadFromFile("Freedom-10eM.ttf")){
+    
+    if(!font.loadFromFile("fonts/space age.ttf")){
         cout << "Error! Could not load font" << endl;
     }
-    
+    text.setFont(font);
+	text.setCharacterSize(20);
+	text.setFillColor(sf::Color::White);
+	text.setPosition({1,0});
+
     while(window.isOpen()){
         Event event;
         while(window.pollEvent(event)){

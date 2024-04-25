@@ -1,6 +1,10 @@
 #include "ComplexPlane.h"
-#include <stdio.h>
-
+#include <SFML/Graphics.hpp>
+#include <iostream>
+#include <sstream>
+#include <cmath>
+#include <string>
+#include <complex>
 
 ComplexPlane::ComplexPlane(int pixelWidth, int pixelHeight){
     m_pixel_size = {pixelWidth, pixelHeight};
@@ -67,7 +71,7 @@ void ComplexPlane::updateRender(){
 }
 int ComplexPlane::countIterations(Vector2f coord){
     complex<double> c(coord.x, coord.y);
-    complex<double>x(0, 0);
+    complex<double> x(0, 0);
     size_t count = 0;
     while (abs(x) < 2 && count < MAX_ITER)
     {
@@ -113,13 +117,15 @@ void ComplexPlane::iterationsToRGB(size_t count, Uint8& r, Uint8& g, Uint8& b){
         b = 102;
     }
 }
-Vector2f ComplexPlane::mapPixelToCoords(Vector2i mousePixel){
-    Vector2f complexPixel;
-    Vector2i monitor_Width = VideoMode::getDesktopMode().width;
-    Vector2i monitor_Height = VideoMode::getDesktopMode().height;
-    float complexPixel.x = mousePixel.x;
-    float complexPixel.y = mousePixel.y;
-    complexPixel.x = (complexPixel.x / monitor_Width) * m_plane_size.x + (m_plane_center.x - m_plane_size.x / 2.0)
-    complexPixel.y = ((complexPixel.y - monitor_Height)/(0 - monitor_Height)) * m_plane_size.y + (m_plane_center.y - m_plane_size.y / 2.0)
-    return complexPixel;
+
+Vector2f ComplexPlane::mapPixelToCoords(Vector2i mousePixel)
+{
+    float xRatio = static_cast<float>(mousePixel.x) / static_cast<float>(m_pixel_size.x);
+    float yRatio = static_cast<float>(mousePixel.y) / static_cast<float>(m_pixel_size.y);
+
+    // Calculate the corresponding coordinates in the complex plane
+    float xCoord = m_plane_center.x - 0.5f * m_plane_size.x + xRatio * m_plane_size.x;
+    float yCoord = m_plane_center.y - 0.5f * m_plane_size.y + yRatio * m_plane_size.y;
+
+    return { xCoord, yCoord };
 }
