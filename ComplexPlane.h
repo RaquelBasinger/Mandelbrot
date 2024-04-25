@@ -14,8 +14,7 @@ const float BASE_ZOOM = 0.5;
 enum State {CALCULATING, DISPLAYING};
 
 class ComplexPlane : public sf::Drawable {
-public:
-    
+public:   
     ComplexPlane(int pixelWidth, int pixelHeight);
     void draw(RenderTarget& target, RenderStates states) const;
     void zoomIn();
