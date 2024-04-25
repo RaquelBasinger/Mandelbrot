@@ -1,6 +1,9 @@
+#pragma once
 #ifndef ComplexPlane_h
 #define ComplexPlane_h
 #include <iostream>
+#include <SFML/System/Vector2.hpp>
+#include <SFML/Graphics.hpp>
 using namespace std;
 using namespace sf;
 
@@ -8,10 +11,11 @@ const unsigned int MAX_ITER = 64;
 const float BASE_WIDTH = 4.0;
 const float BASE_HEIGHT = 4.0;
 const float BASE_ZOOM = 0.5;
+enum State {CALCULATING, DISPLAYING};
 
 class ComplexPlane : public sf::Drawable {
 public:
-    enum State {CALCULATING, DISPLAYING};
+    
     ComplexPlane(int pixelWidth, int pixelHeight);
     void draw(RenderTarget& target, RenderStates states) const;
     void zoomIn();
